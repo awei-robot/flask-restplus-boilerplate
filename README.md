@@ -37,3 +37,6 @@ If you want to contribute to this flask restplus boilerplate, clone the reposito
 ```
 https://github.com/cosmic-byte/flask-restplus-boilerplate.git
 ```
+
+### 删除系统中多余的docker image
+docker image ls|grep '<none>'|awk '{print $3 }'|xargs docker image rm -

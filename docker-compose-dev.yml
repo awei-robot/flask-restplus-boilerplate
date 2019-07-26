@@ -1,0 +1,14 @@
+version: '3'
+services:
+  web:
+    environment:
+      BOILERPLATE_ENV: 'dev'
+      DATABASE_URL: ""
+    image: flask-restplus-boilerplate_app # change the image to your proj_app
+    volumes:
+      - ./:/app
+    ports:
+    - "5000:5000"
+
+
+

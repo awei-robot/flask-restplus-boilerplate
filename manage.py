@@ -1,3 +1,4 @@
+#coding=utf8
 import os
 import unittest
 
@@ -8,6 +9,7 @@ from app import blueprint
 from app.main import create_app, db
 from app.main.model import user, blacklist
 
+# 缺省是dev环境，或者设置环境变量BOILERPLATE_ENV来指定环境
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
 app.register_blueprint(blueprint)
 
@@ -22,7 +24,7 @@ manager.add_command('db', MigrateCommand)
 
 @manager.command
 def run():
-    app.run()
+    app.run(port=5000, host="0.0.0.0")
 
 
 @manager.command
