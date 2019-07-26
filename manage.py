@@ -7,7 +7,7 @@ from flask_script import Manager
 
 from app import blueprint
 from app.main import create_app, db
-from app.main.model import user, blacklist
+from app.main.model import user, blacklist, event
 
 # 缺省是dev环境，或者设置环境变量BOILERPLATE_ENV来指定环境
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')
