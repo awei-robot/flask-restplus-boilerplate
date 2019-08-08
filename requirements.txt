@@ -25,3 +25,4 @@ pytz==2019.1
 six==1.12.0
 SQLAlchemy==1.3.5
 Werkzeug==0.15.4
+sqlacodegen==2.0.1

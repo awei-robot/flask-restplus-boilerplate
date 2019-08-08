@@ -1,9 +1,9 @@
 from flask_restplus import Api
 from flask import Blueprint, request
 
-from .main.controller.user_controller import api as user_ns
-from .main.controller.auth_controller import api as auth_ns
-from .main.service.event_service import save_events
+from app.main.controller.user_controller import api as user_ns
+from app.main.controller.auth_controller import api as auth_ns
+from app.main.service.event_service import save_events
 
 blueprint = Blueprint('api', __name__)
 
