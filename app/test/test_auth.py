@@ -8,7 +8,7 @@ from app.test.base import BaseTestCase
 
 def register_user(self):
     return self.client.post(
-        '/user/',
+        '/api/user/',
         data=json.dumps(dict(
             email='joe@gmail.com',
             username='username',
@@ -20,7 +20,7 @@ def register_user(self):
 
 def login_user(self):
     return self.client.post(
-        '/auth/login',
+        '/api/auth/login',
         data=json.dumps(dict(
             email='joe@gmail.com',
             password='123456'
@@ -108,7 +108,7 @@ class TestAuthBlueprint(BaseTestCase):
             self.assertEqual(resp_login.status_code, 200)
             # valid token logout
             response = self.client.post(
-                '/auth/logout',
+                '/api/auth/logout',
                 headers=dict(
                     Authorization='Bearer ' + json.loads(
                         resp_login.data.decode()
@@ -147,7 +147,7 @@ class TestAuthBlueprint(BaseTestCase):
             db.session.commit()
             # blacklisted valid token logout
             response = self.client.post(
-                '/auth/logout',
+                '/api/auth/logout',
                 headers=dict(
                     Authorization='Bearer ' + json.loads(
                         resp_login.data.decode()

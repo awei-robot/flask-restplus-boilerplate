@@ -1,18 +1,13 @@
 from flask import request
-
-from app.main import db
+from app.main import db, celery
 from app.main.model.event import Events
 from app.main.service.auth_helper import Auth
 
 
+@celery.task
 def save_events(event_data):
-    data, status = Auth.get_logged_in_user(request)
-    if status == 200:
-        user_public_id = data['data']['public_id']
-    else:
-        user_public_id = ''
     event = Events(
-        user_pid=user_public_id,
+        user_pid=event_data['user_pid'],
         request_path=event_data['request_path'],
         request_data=event_data['request_data'],
         request_method=event_data['request_method'],

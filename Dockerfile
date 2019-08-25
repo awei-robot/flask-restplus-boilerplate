@@ -14,4 +14,4 @@ COPY app /app/app
 COPY Makefile /app
 COPY manage.py /app
 
-CMD python manage.py run
+#CMD python manage.py run

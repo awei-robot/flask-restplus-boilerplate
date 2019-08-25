@@ -2,13 +2,18 @@ version: '3'
 services:
   app:
     build: .
+    command: "python manage.py run"
     environment:
       BOILERPLATE_ENV: "prod"
-      DATABASE_URL: "mysql+mysqldb://root:root@db:3306/cybuildings"
+      DATABASE_URL: "mysql+mysqldb://root:root@db:3306/mydb"
     links:
-    - db
+      - db
+      - celery
+      - redis
+    networks:
+      - mynet
     ports:
-    - "5000:5000"
+      - "5000:5000"
 
   db:
     image: mysql:5.7
@@ -16,9 +21,11 @@ services:
     ports:
       - "3311:3306"
     volumes:
-      - data2:/var/lib/mysql
+      - ./mysql/data:/var/lib/mysql
       - ./mysql/my.cnf:/etc/my.cnf
       - ./mysql/init:/docker-entrypoint-initdb.d/
+    networks:
+      - mynet
     environment:
       MYSQL_DATABASE: "mydb"
       MYSQL_USER: "admin"
@@ -28,7 +35,26 @@ services:
       TZ: "Asia/Shanghai"
 #      command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
-volumes:
-  data2:
-    driver: local
+  celery:
+    build: .
+    command: "celery worker -A app.main.celery --loglevel=info -b redis://redis:6379/0 "
+    user: nobody
+    environment:
+      BOILERPLATE_ENV: "prod"
+      DATABASE_URL: "mysql+mysqldb://root:root@db:3306/mydb"
+    links:
+      - redis
+    networks:
+      - mynet
+
+  redis:
+    image: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - mynet
+
+networks:
+  mynet:
+
 
