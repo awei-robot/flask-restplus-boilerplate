@@ -11,6 +11,8 @@
     运行测试 : python manage.py tests
     
     查看Swagger文档: 浏览器访问http://0.0.0.0:5000/
+    
+    创建数据记得默认 default character set = 'utf-8';
 
 ### 初始化环境Docker
 	本机需要安装Docker,docker-compose
@@ -20,11 +22,18 @@
 ### 删除系统中多余的docker image
     docker image ls|grep '<none>'|awk '{print $3 }'|xargs docker image rm -
 
+### 删除系统中未使用的volume 
+    docker volume rm $(docker volume ls -qf dangling=true)
+    
+### 删除系统中所有退出容器   
+    docker ps -a | grep Exit | cut -d ' ' -f 1 | xargs docker rm
+
 ### time的约定
     model定义里面全部使用utcnow， 例如timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
     程序里面时间定义全部使用utcnow(), 例如 registered_on=datetime.datetime.utcnow()
 
 ### 数据库反映射model表
+    python3.x sqlacodegen mysql+pymysql://username:password@localhost/db
 
 	sqlacodegen --noviews --noconstraints --noindexes --outfile models.py mysql://user:pass@localhost/dbname
 	

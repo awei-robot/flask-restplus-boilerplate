@@ -2,7 +2,8 @@ version: '3'
 services:
   app:
     build: .
-    command: "python manage.py run"
+#    command: "gunicorn manage:app -w 8 -b 0.0.0.0:5000 -k gevent"
+    command: "supervisord -n"
     environment:
       BOILERPLATE_ENV: "prod"
       DATABASE_URL: "mysql+mysqldb://root:root@db:3306/mydb"
