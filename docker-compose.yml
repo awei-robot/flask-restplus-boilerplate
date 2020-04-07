@@ -6,7 +6,7 @@ services:
     command: "supervisord -n"
     environment:
       BOILERPLATE_ENV: "prod"
-      DATABASE_URL: "mysql+mysqldb://root:root@db:3306/mydb"
+      DATABASE_URL: "mysql+pymysql://root:root@db:3306/mydb?charset=utf8mb4"
     links:
       - db
       - celery
@@ -42,7 +42,7 @@ services:
     user: nobody
     environment:
       BOILERPLATE_ENV: "prod"
-      DATABASE_URL: "mysql+mysqldb://root:root@db:3306/mydb"
+      DATABASE_URL: "mysql+pymysql://root:root@db:3306/mydb?charset=utf8mb4"
     links:
       - redis
     networks:

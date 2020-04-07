@@ -28,4 +28,5 @@ Werkzeug==0.15.4
 sqlacodegen==2.0.1
 celery==4.3.0
 redis==3.3.8
-mysqlclient==1.4.4
+#mysqlclient==1.4.4
+pymysql==0.9.3

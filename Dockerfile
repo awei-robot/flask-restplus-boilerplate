@@ -1,10 +1,10 @@
 #FROM python:3.6
 FROM pypy:3.6-stretch
 # 使用国内源
-#COPY sources.list /etc/apt/sources.list
+COPY sources.list /etc/apt/sources.list
 # 安装supervisor
 RUN apt-get update \
-    && apt-get install -y supervisor \
+    && apt-get install -y --allow-unauthenticated supervisor \
     && rm -rf /var/lib/apt/lists/* \
     && apt-get clean
 
@@ -26,7 +26,6 @@ COPY requirements.txt /app/requirements.txt
 RUN pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
 RUN pip install gunicorn -i https://mirrors.aliyun.com/pypi/simple/
 RUN pip install gevent -i https://mirrors.aliyun.com/pypi/simple/
-RUN pip install flask_migrate -i https://mirrors.aliyun.com/pypi/simple/
 
 COPY app /app/app
 COPY Makefile /app
